@@ -1,28 +1,30 @@
-# 1. Use official Node.js base image
+# Use Node.js base image
 FROM node:18
 
-# 2. Set working directory
+# Set working directory
 WORKDIR /app
 
-# 3. Copy package files and install dependencies
-COPY package*.json ./
+# Copy only package.json and install deps first (for Docker caching)
+COPY package.json ./
+
+# Install only if package.json is valid
 RUN npm install
 
-# 4. Copy the rest of the application
+# Copy rest of project files
 COPY . .
 
-# 5. Ensure required folders exist
-RUN mkdir -p /app/.sessions /app/sessions /app/public
+# Create needed folders
+RUN mkdir -p .sessions sessions public
 
-# 6. Puppeteer dependencies (needed for Chromium headless in Docker)
+# Puppeteer/Chromium deps for whatsapp-web.js
 RUN apt-get update && apt-get install -y \
     fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 \
     libatk1.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 libnspr4 libnss3 \
     libxcomposite1 libxdamage1 libxrandr2 xdg-utils wget ca-certificates \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-# 7. Expose the web server port
+# Expose your app port
 EXPOSE 3000
 
-# 8. Launch the bot
+# Start command
 CMD ["npm", "start"]
