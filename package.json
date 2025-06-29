@@ -1,13 +1,11 @@
 {
-  "name": "whatsapp-bot-pairing",
+  "name": "whatsapp-bot",
   "version": "1.0.0",
-  "description": "WhatsApp bot with web UI, MEGA upload, and QR pairing",
+  "description": "WhatsApp bot with MEGA and web interface",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Tcroneb Hackx",
-  "license": "MIT",
   "dependencies": {
     "archiver": "^6.0.0",
     "express": "^4.18.2",
